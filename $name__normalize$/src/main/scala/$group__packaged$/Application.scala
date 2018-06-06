@@ -1,5 +1,5 @@
 package $group$
 
 object Application extends App {
-  println( $name_camelcased$() )
+  println( $name;format="Camel"$() )
 }

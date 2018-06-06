@@ -3,7 +3,7 @@ import Dependencies._
 dockerRepository := Some("$group$")
 maintainer in Docker := "$maintainer$"
 packageSummary in Docker := "$name$"
-packageName in Docker := "$name_normalized$"
+packageName in Docker := "$name;format="normalize"$"
 packageDescription := "$name$"
 dockerBaseImage := "anapsix/alpine-java:9"
 
@@ -14,12 +14,12 @@ javaOptions in Universal ++= Seq(
   "-J-XX:+UseCGroupMemoryLimitForHeap"
 )
 
-mainClass in `root` in Compile := (mainClass in `$name_lower_camelcased$` in Compile).value
-fullClasspath in `root` in Runtime ++= (fullClasspath in `$name_lower_camelcased$` in Runtime).value
+mainClass in `root` in Compile := (mainClass in `$name;format="camel"$` in Compile).value
+fullClasspath in `root` in Runtime ++= (fullClasspath in `$name;format="camel"$` in Runtime).value
 
 lazy val root = (project in file(".")).
-  aggregate($name_lower_camelcased$).
-  dependsOn($name_lower_camelcased$).
+  aggregate($name;format="camel"$).
+  dependsOn($name;format="camel"$).
   settings(inThisBuild(List(
       organization := "$group$",
       scalaVersion := "$scala_version$",
@@ -29,7 +29,7 @@ lazy val root = (project in file(".")).
     name := "$name;format="normalize"$-root"
   )
 
-lazy val $name_lower_camelcased$ = (project in file("$name_normalized$")).
+lazy val $name;format="camel"$ = (project in file("$name;format="normalize"$")).
   configs(IntegrationTest).
   settings(Defaults.itSettings).
   settings(

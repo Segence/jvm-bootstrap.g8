@@ -1,5 +1,5 @@
 package $group$
 
-object $name_camelcased$ {
+object $name;format="Camel"$ {
   def apply(): String = "Hello $name$"
 }
