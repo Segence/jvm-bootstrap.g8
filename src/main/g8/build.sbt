@@ -14,6 +14,20 @@ javaOptions in Universal ++= Seq(
   "-J-XX:+UseCGroupMemoryLimitForHeap"
 )
 
+$if(open_jmx_port.truthy)$
+javaOptions in Universal ++= Seq(
+  "-J-XX:+UnlockExperimentalVMOptions",
+  "-J-XX:+UseCGroupMemoryLimitForHeap",
+  "-Dcom.sun.management.jmxremote",
+  "-Dcom.sun.management.jmxremote.port=9010",
+  "-Dcom.sun.management.jmxremote.rmi.port=9010",
+  "-Dcom.sun.management.jmxremote.local.only=false",
+  "-Dcom.sun.management.jmxremote.authenticate=false",
+  "-Dcom.sun.management.jmxremote.ssl=false",
+  "-Djava.rmi.server.hostname=127.0.0.1"
+)
+$endif$
+
 mainClass in `root` in Compile := (mainClass in `$name;format="camel"$` in Compile).value
 fullClasspath in `root` in Runtime ++= (fullClasspath in `$name;format="camel"$` in Runtime).value
 
