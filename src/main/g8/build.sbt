@@ -6,9 +6,9 @@ maintainer in Docker := "$maintainer$"
 packageSummary in Docker := "$name$"
 packageName in Docker := "$name;format="normalize"$"
 packageDescription := "$name$"
-dockerBaseImage := "anapsix/alpine-java:9"
+dockerBaseImage := "openjdk:8-jre-alpine"
 
-enablePlugins(DockerPlugin, JavaAppPackaging)
+enablePlugins(DockerPlugin, JavaAppPackaging, AshScriptPlugin)
 
 javaOptions in Universal ++= Seq(
   "-J-XX:+UnlockExperimentalVMOptions",
