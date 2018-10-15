@@ -3,14 +3,14 @@ import sbt._
 object Dependencies {
 
   object DependencyVersions {
-    val AkkaHttp = "10.1.1"
-    val Akka = "2.5.12"
+    val AkkaHttp = "10.1.5"
+    val Akka = "2.5.17"
     val AkkaLog4j = "1.6.0"
     val Log4j = "2.10.0"
 
     val Kamon = "1.1.0"
     val KamonPrometheus = "1.0.0"
-    val KamonJMX = "0.1.4"
+    val KamonJMX = "0.1.7"
 
     val Scalacheck = "1.14.0"
     val Scalatest = "3.0.5"

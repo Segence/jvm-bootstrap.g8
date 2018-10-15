@@ -1,4 +1,5 @@
 import Dependencies._
+import Resolvers._
 
 dockerRepository := Some("$group$")
 maintainer in Docker := "$maintainer$"
@@ -30,6 +31,8 @@ $endif$
 
 mainClass in `root` in Compile := (mainClass in `$name;format="camel"$` in Compile).value
 fullClasspath in `root` in Runtime ++= (fullClasspath in `$name;format="camel"$` in Runtime).value
+
+resolvers in ThisBuild += ProjectResolvers
 
 lazy val root = (project in file(".")).
   aggregate($name;format="camel"$).
