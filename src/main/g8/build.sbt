@@ -1,21 +1,18 @@
 import Dependencies._
 import Resolvers._
 
-packageDescription := "$name$"
-
 $if(package_docker.truthy)$
 dockerRepository := Some("$group$")
 maintainer in Docker := "$maintainer$"
 packageSummary in Docker := "$name$"
+packageDescription := "$name$"
 packageName in Docker := "$name;format="normalize"$"
 
 dockerBaseImage := "openjdk:8-jre-alpine"
 
 enablePlugins(DockerPlugin, JavaAppPackaging, AshScriptPlugin)
-$else$
-enablePlugins(JavaAppPackaging)
-$endif$
 
+$if(package_docker.truthy)$
 javaOptions in Universal ++= Seq(
 $if(open_jmx_port.truthy)$
   "-J-XX:+UnlockExperimentalVMOptions",
@@ -31,6 +28,7 @@ $endif$
   "-J-XX:+UnlockExperimentalVMOptions",
   "-J-XX:+UseCGroupMemoryLimitForHeap"
 )
+$endif$
 
 mainClass in `root` in Compile := (mainClass in `$name;format="camel"$` in Compile).value
 fullClasspath in `root` in Runtime ++= (fullClasspath in `$name;format="camel"$` in Runtime).value
