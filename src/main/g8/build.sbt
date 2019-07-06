@@ -1,22 +1,23 @@
 import Dependencies._
 import Resolvers._
 
+packageDescription := "$name$"
+
+$if(package_docker.truthy)$
 dockerRepository := Some("$group$")
 maintainer in Docker := "$maintainer$"
 packageSummary in Docker := "$name$"
 packageName in Docker := "$name;format="normalize"$"
-packageDescription := "$name$"
+
 dockerBaseImage := "openjdk:8-jre-alpine"
 
 enablePlugins(DockerPlugin, JavaAppPackaging, AshScriptPlugin)
+$else$
+enablePlugins(JavaAppPackaging)
+$endif$
 
 javaOptions in Universal ++= Seq(
-  "-J-XX:+UnlockExperimentalVMOptions",
-  "-J-XX:+UseCGroupMemoryLimitForHeap"
-)
-
 $if(open_jmx_port.truthy)$
-javaOptions in Universal ++= Seq(
   "-J-XX:+UnlockExperimentalVMOptions",
   "-J-XX:+UseCGroupMemoryLimitForHeap",
   "-Dcom.sun.management.jmxremote",
@@ -25,9 +26,11 @@ javaOptions in Universal ++= Seq(
   "-Dcom.sun.management.jmxremote.local.only=false",
   "-Dcom.sun.management.jmxremote.authenticate=false",
   "-Dcom.sun.management.jmxremote.ssl=false",
-  "-Djava.rmi.server.hostname=127.0.0.1"
-)
+  "-Djava.rmi.server.hostname=127.0.0.1",
 $endif$
+  "-J-XX:+UnlockExperimentalVMOptions",
+  "-J-XX:+UseCGroupMemoryLimitForHeap"
+)
 
 mainClass in `root` in Compile := (mainClass in `$name;format="camel"$` in Compile).value
 fullClasspath in `root` in Runtime ++= (fullClasspath in `$name;format="camel"$` in Runtime).value
