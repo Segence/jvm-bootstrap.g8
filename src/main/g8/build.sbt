@@ -12,7 +12,6 @@ dockerBaseImage := "openjdk:8-jre-alpine"
 
 enablePlugins(DockerPlugin, JavaAppPackaging, AshScriptPlugin)
 
-$if(package_docker.truthy)$
 javaOptions in Universal ++= Seq(
 $if(open_jmx_port.truthy)$
   "-J-XX:+UnlockExperimentalVMOptions",
